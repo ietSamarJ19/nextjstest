@@ -1,50 +1,87 @@
 "use client"
 
 import React from 'react';
-import Link from 'next/link';
+
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { cn } from "@/lib/utils"
+import { Button } from './ui/button';
+
 
 const Navbar: React.FC = () => {
-  const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About Us' },
-    { href: '/academics', label: 'Academics' },
-    { href: '/admissions', label: 'Admissions' },
-    { href: '/people', label: 'People' },
-    { href: '/activities', label: 'Activities' },
-    { href: '/examinations', label: 'Examinations' },
-    { href: '/tnp', label: 'T&P' },
-    { href: '/results', label: 'Results' }
+  const navigationItems = [
+    { name: 'Home', href: '/' },
+    { 
+      name: 'About Us', 
+      href: '/about',
+      dropdown: ['History', 'Vision & Mission', 'Leadership', 'Infrastructure']
+    },
+    { 
+      name: 'Academics', 
+      href: '/academics',
+      dropdown: ['Programs', 'Departments', 'Faculty', 'Curriculum']
+    },
+    { 
+      name: 'Admissions', 
+      href: '/admissions',
+      dropdown: ['Requirements', 'Application', 'Fees', 'Scholarships']
+    },
+    { name: 'Hostel', href: '/hostel' },
+    { name: 'Contact Us', href: '/contact' },
+    { name: "Fresher's Corner", href: '/freshers' }
   ];
 
   return (
-    <nav className="bg-background border-b shadow-sm">
-      <div className="container mx-auto px-4">
-        <NavigationMenu className="max-w-full">
-          <NavigationMenuList className="flex space-x-1">
-            {navItems.map((item) => (
-              <NavigationMenuItem key={item.href}>
-                <Link href={item.href} passHref>
-                  <NavigationMenuLink
-                    className={cn(
-                      "group inline-flex h-12 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+    <nav className="bg-blue-500 text-white">
+        <div className="max-w-7xl mx-auto">
+          {/* Desktop Navigation */}
+          <div className="hidden md:block py-3">
+            <NavigationMenu className="mx-auto">
+              <NavigationMenuList className="space-x-2">
+                {navigationItems.map((item, index) => (
+                  <NavigationMenuItem key={index}>
+                    {item.dropdown ? (
+                      <>
+                        <NavigationMenuTrigger className="bg-transparent hover:bg-blue-600 text-white data-[state=open]:bg-blue-600">
+                          {item.name}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <div className="w-48 p-2">
+                            {item.dropdown.map((subItem, subIndex) => (
+                              <NavigationMenuLink key={subIndex} asChild>
+                                <Button
+                                  variant="ghost" 
+                                  className="w-full justify-start text-gray-800 hover:bg-gray-100"
+                                >
+                                  {subItem}
+                                </Button>
+                              </NavigationMenuLink>
+                            ))}
+                          </div>
+                        </NavigationMenuContent>
+                      </>
+                    ) : (
+                      <NavigationMenuLink asChild>
+                        <Button 
+                          variant="ghost" 
+                          className="bg-transparent hover:bg-blue-600 text-white px-6"
+                        >
+                          {item.name}
+                        </Button>
+                      </NavigationMenuLink>
                     )}
-                  >
-                    {item.label}
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-    </nav>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+        </div>
+      </nav>
   );
 };
 
