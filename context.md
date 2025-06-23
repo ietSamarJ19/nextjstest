@@ -1,0 +1,2 @@
+### Goal: I am giving you two images and we have to take inspiration from these photo and have to make the home page for my college website. I have broken down the image into sections and have made initial section. the tech stack I am using is nextjs and shadcn and tailwindcss 
+ So lets build Welcome/About Section - IET-DAVV introduction with college image  Recruiters Section - Company logos showing placement partners  Academic Programs - Program cards with tabs (Bachelors, Masters, PhD) sections
